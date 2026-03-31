@@ -1,6 +1,0 @@
-animal_id,name,age,sex,health_status,date_acquired,species_id,exhibit_id,keeper_id
-1,Chester,5,M,Healthy,2021-03-10,1,1,2
-2,Barry,25,M,Healthy,2019-10-10,2,2,1
-3,Jared,28,M,Healthy,2018-07-20,2,2,1
-4,Margaret,38,F,Healthy,2020-05-05,2,2,1
-5,Jeff,16,M,Injured,2026-03-30,3,3,1
