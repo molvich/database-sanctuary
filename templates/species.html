@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>Species</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Species</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('index') }}">Back to Main Page</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">Species Overview</div>
+            <div class="hero-text">Current species in the sanctuary</div>
+        </div>
+
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Common Name</th>
+                        <th>Scientific Name</th>
+                        <th>Diet</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for specie in species %}
+                    <tr>
+                        <td>{{ specie.common_name }}</td>
+                        <td>{{ specie.scientific_name}}</td>
+                        <td>{{ specie.diet_type }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4">No exhibits on record.</td></tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</html>

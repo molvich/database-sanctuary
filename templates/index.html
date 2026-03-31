@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>Home</title>
+    </head>
+
+    <div class="topbar">
+        <div class="topbar-left">Sanctuary Manager</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('animal_list') }}">Animals</a>
+            <a href="{{ url_for('exhibit_list') }}">Exhibits</a>
+            <a href="{{ url_for('species_list') }}">Species</a>
+        </div>
+    </div>
+
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">Wildlife Sanctuary</div>
+            <div class="hero-text">Monitoring and managing of residents, habitats, and staff assignments</div>
+        </div>
+
+        <div class="action-grid">
+
+            <a href="{{ url_for('add_animal') }}" class="action-card">
+                <h3>Admissions</h3>
+                <p>Register a new resident</p>
+            </a>
+
+            <a href="#" class="action-card">
+                <h3>Management</h3>
+                <p>Update resident status, record feeding log, or process transfers.</p>
+            </a>
+
+            <a href="#" class="action-card">
+                <h3>Roster</h3>
+                <p>View employees and their assigned residents.</p>
+            </a>
+        </div>
+    </div>
+</html>

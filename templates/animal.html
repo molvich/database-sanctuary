@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>Animals</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Animals</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('index') }}">Back to Main Page</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">Resident Overview</div>
+            <div class="hero-text">Current residents of the sanctuary</div>
+        </div>
+
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Species</th>
+                        <th>Age</th>
+                        <th>Sex</th>
+                        <th>Health Status</th>
+                        <th>Exhibit</th>
+                        <th>Date Acquired</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for animal in animals %}
+                    <tr>
+                        <td>{{ animal.name }}</td>
+                        <td>{{ animal.common_name }}</td>
+                        <td>{{ animal.age }} years</td>
+                        <td>{{ animal.sex }}</td>
+                        <td>{{ animal.health_status }}</td>
+                        <td>{{ animal.exhibit_name }}</td>
+                        <td>{{ animal.date_acquired }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="7">No residents on record.</td></tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</html>
