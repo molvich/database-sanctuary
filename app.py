@@ -31,7 +31,7 @@ def animal_list():
             SELECT a.name, a.age, a.sex, a.health_status, a.date_acquired, s.common_name, e.name AS exhibit_name
             FROM Animal a
                      LEFT JOIN species s on a.species_id = s.species_id
-                     LEFT JOIN exhibit e on a.exhibit_id = e.exhibit_id \
+                     LEFT JOIN exhibit e on a.exhibit_id = e.exhibit_id 
             """
 
     cursor.execute(query)
