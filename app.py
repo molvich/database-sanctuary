@@ -28,11 +28,11 @@ def animal_list():
 
     # Select without join for Animal
     query = """
-            SELECT a.name, a.age, a.sex, a.health_status, a.date_acquired, s.common_name, e.name AS exhibit_name 
+            SELECT a.name, a.age, a.sex, a.health_status a.date_acquired, s.common_name, e.name AS exhibit_name
             FROM Animal a
-            LEFT JOIN species s on a.species_id = s.species_id
-            LEFT JOIN exhibit e on a.exhibit_id = e.exhibit_id  
-    """
+                     LEFT JOIN species s on a.species_id = s.species_id
+                     LEFT JOIN exhibit e on a.exhibit_id = e.exhibit_id \
+            """
 
     cursor.execute(query)
     list_animals = cursor.fetchall()
@@ -89,13 +89,14 @@ def add_animal():
         exhibit_id = request.form.get('exhibit_id')
         keeper_id = request.form.get('keeper_id')
 
-
         # Try except loop for input validation
         try:
             # Validating that the species is allowed in the selected exhibit
             cursor.execute("""
-                           SELECT exhibit_id FROM exhibit
-                           WHERE exhibit_id = %s AND species_id = %s
+                           SELECT exhibit_id
+                           FROM exhibit
+                           WHERE exhibit_id = %s
+                             AND species_id = %s
                            """, (exhibit_id, species_id))
             valid = cursor.fetchone()
 
@@ -112,6 +113,7 @@ def add_animal():
                            """, (exhibit_id,))
             exhibit = cursor.fetchone()
 
+            # If exhibit exists and current count exceeds exhibits capacity
             if exhibit and exhibit['current_count'] >= exhibit['capacity']:
                 cursor.execute("SELECT species_id, common_name FROM species")
                 list_species = cursor.fetchall()
@@ -119,14 +121,19 @@ def add_animal():
                 list_exhibits = cursor.fetchall()
                 cursor.execute("SELECT keeper_id, name FROM keeper")
                 list_keepers = cursor.fetchall()
+
+                # render_template returns an error
                 return render_template('admission_form.html',
                                        species=list_species,
                                        exhibits=list_exhibits,
                                        keepers=list_keepers,
                                        error="That exhibit is at full capacity.")
 
-            sql = """INSERT INTO animal (name, age, sex, health_status, date_acquired, species_id, exhibit_id, keeper_id)
-                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+            # SQL command to add new animal to table based on inputs
+            sql = """
+                  INSERT INTO animal (name, age, sex, health_status, date_acquired, species_id, exhibit_id, keeper_id)
+                  VALUES (%s, %s, %s, %s, %s, %s, %s, %s) 
+                  """
             cursor.execute(sql, (name, age, sex, health, date, species_id, exhibit_id, keeper_id))
             db.commit()
 
@@ -152,11 +159,11 @@ def add_animal():
     cursor.close()
     db.close()
 
-
     return render_template('admission_form.html',
                            species=list_species,
                            exhibits=list_exhibits,
                            keepers=list_keepers)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
