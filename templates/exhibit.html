@@ -23,20 +23,21 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Location</th>
-                        <th>Max Capacity</th>
+                        <th>Type</th>
+                        <th class="numeric">Max Capacity</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {% for exhibit in exhibits %}
-                    <tr>
+                    <tr class="clickable-row"
+                        onclick="window.location='{{ url_for('exhibit_detail', exhibit_id=exhibit.exhibit_id) }}';">
                         <td>{{ exhibit.name }}</td>
                         <td>{{ exhibit.type }}</td>
-                        <td>{{ exhibit.capacity }}</td>
+                        <td class="numeric">{{ exhibit.capacity }}</td>
                     </tr>
                     {% else %}
-                    <tr><td colspan="4">No exhibits on record.</td></tr>
+                    <tr><td colspan="3">No exhibits on record.</td></tr>
                     {% endfor %}
                 </tbody>
 

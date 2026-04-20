@@ -30,13 +30,14 @@
 
                 <tbody>
                     {% for specie in species %}
-                    <tr>
+                    <tr class="clickable-row"
+                        onclick="window.location='{{ url_for('species_detail', species_id=specie.species_id) }}';">
                         <td>{{ specie.common_name }}</td>
-                        <td>{{ specie.scientific_name}}</td>
+                        <td><em>{{ specie.scientific_name }}</em></td>
                         <td>{{ specie.diet_type }}</td>
                     </tr>
                     {% else %}
-                    <tr><td colspan="4">No exhibits on record.</td></tr>
+                    <tr><td colspan="3">No species on record.</td></tr>
                     {% endfor %}
                 </tbody>
 

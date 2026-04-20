@@ -26,17 +26,17 @@
 
             <a href="{{ url_for('add_animal') }}" class="action-card">
                 <h3>Admissions</h3>
-                <p>Register a new resident</p>
+                <p>Register a new resident.</p>
             </a>
 
-            <a href="#" class="action-card">
-                <h3>Management</h3>
-                <p>Update resident status, record feeding log, or process transfers.</p>
+            <a href="{{ url_for('add_feeding') }}" class="action-card">
+                <h3>Feeding Log</h3>
+                <p>Record a feeding event for any resident.</p>
             </a>
 
-            <a href="#" class="action-card">
-                <h3>Roster</h3>
-                <p>View employees and their assigned residents.</p>
+            <a href="{{ url_for('keeper_list') }}" class="action-card">
+                <h3>Employees</h3>
+                <p>View keepers and their assigned residents.</p>
             </a>
         </div>
     </div>

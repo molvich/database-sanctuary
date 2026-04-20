@@ -24,7 +24,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Species</th>
-                        <th>Age</th>
+                        <th class="numeric">Age (yrs)</th>
                         <th>Sex</th>
                         <th>Health Status</th>
                         <th>Exhibit</th>
@@ -34,10 +34,11 @@
 
                 <tbody>
                     {% for animal in animals %}
-                    <tr>
+                    <tr class="clickable-row"
+                        onclick="window.location='{{ url_for('animal_detail', animal_id=animal.animal_id) }}';">
                         <td>{{ animal.name }}</td>
                         <td>{{ animal.common_name }}</td>
-                        <td>{{ animal.age }} years</td>
+                        <td class="numeric">{{ animal.age }}</td>
                         <td>{{ animal.sex }}</td>
                         <td>{{ animal.health_status }}</td>
                         <td>{{ animal.exhibit_name }}</td>

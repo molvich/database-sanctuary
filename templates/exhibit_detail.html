@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>{{ exhibit.name }}</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Exhibit</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('exhibit_list') }}">All Exhibits</a>
+            <a href="{{ url_for('index') }}">Home</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">{{ exhibit.name }}</div>
+            <div class="hero-text">{{ exhibit.type }} : {{ residents|length }} / {{ exhibit.capacity }} residents</div>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-card">
+                <div class="detail-label">Type</div>
+                <div class="detail-value">{{ exhibit.type }}</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-label">Capacity</div>
+                <div class="detail-value">{{ exhibit.capacity }}</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-label">Current Residents</div>
+                <div class="detail-value">{{ residents|length }}</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-label">Open Spots</div>
+                <div class="detail-value">{{ exhibit.capacity - residents|length }}</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title">Residents</div>
+        </div>
+
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Species</th>
+                        <th class="numeric">Age (yrs)</th>
+                        <th>Sex</th>
+                        <th>Health Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in residents %}
+                    <tr class="clickable-row"
+                        onclick="window.location='{{ url_for('animal_detail', animal_id=r.animal_id) }}';">
+                        <td>{{ r.name }}</td>
+                        <td>{{ r.common_name }}</td>
+                        <td class="numeric">{{ r.age }}</td>
+                        <td>{{ r.sex }}</td>
+                        <td>{{ r.health_status }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5">No residents in this exhibit.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</html>

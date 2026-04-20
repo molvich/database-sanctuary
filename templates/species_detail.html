@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>{{ species.common_name }}</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Species</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('species_list') }}">All Species</a>
+            <a href="{{ url_for('index') }}">Home</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">{{ species.common_name }}</div>
+            <div class="hero-text"><em>{{ species.scientific_name }}</em></div>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-card">
+                <div class="detail-label">Scientific Name</div>
+                <div class="detail-value"><em>{{ species.scientific_name }}</em></div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-label">Diet</div>
+                <div class="detail-value">{{ species.diet_type }}</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-label">Residents on Site</div>
+                <div class="detail-value">{{ residents|length }}</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title">Residents</div>
+        </div>
+
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="numeric">Age (yrs)</th>
+                        <th>Sex</th>
+                        <th>Health Status</th>
+                        <th>Exhibit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in residents %}
+                    <tr class="clickable-row"
+                        onclick="window.location='{{ url_for('animal_detail', animal_id=r.animal_id) }}';">
+                        <td>{{ r.name }}</td>
+                        <td class="numeric">{{ r.age }}</td>
+                        <td>{{ r.sex }}</td>
+                        <td>{{ r.health_status }}</td>
+                        <td>{{ r.exhibit_name }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5">No residents of this species on record.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</html>

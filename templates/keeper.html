@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>Roster</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Roster</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('index') }}">Back to Main Page</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">Keeper Roster</div>
+            <div class="hero-text">Sanctuary staff</div>
+        </div>
+
+        {% if error %}
+        <div class="form-error">{{ error }}</div>
+        {% endif %}
+
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Shift</th>
+                        <th class="numeric">Residents Assigned</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for k in keepers %}
+                    <tr class="clickable-row"
+                        onclick="window.location='{{ url_for('keeper_detail', keeper_id=k.keeper_id) }}';">
+                        <td>{{ k.name }}</td>
+                        <td>{{ k.phone }}</td>
+                        <td>{{ k.shift }}</td>
+                        <td class="numeric">{{ k.animal_count }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4">No keepers on record.</td></tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+            <div class="action-row">
+                <a class="submit-btn" href="{{ url_for('add_keeper', keeper_id=keeper_id) }}">Add Keeper</a>
+            </div>
+        </div>
+    </div>
+</html>

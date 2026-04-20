@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>Edit Resident</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Edit Resident</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('animal_detail', animal_id=animal.animal_id) }}">Back to Resident</a>
+            <a href="{{ url_for('animal_list') }}">All Residents</a>
+            <a href="{{ url_for('index') }}">Home</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">Edit Resident</div>
+            <div class="hero-text">Update record for {{ animal.name }}</div>
+        </div>
+
+        {% if error %}
+        <div class="form-error">{{ error }}</div>
+        {% endif %}
+
+        <div class="form-section">
+            <form method="POST" action="{{ url_for('edit_animal', animal_id=animal.animal_id) }}">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required value="{{ animal.name }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" required min="0" max="999" value="{{ animal.age }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="sex">
+                        <option value="M" {% if animal.sex == 'M' %}selected{% endif %}>Male</option>
+                        <option value="F" {% if animal.sex == 'F' %}selected{% endif %}>Female</option>
+                        <option value="Other" {% if animal.sex == 'Other' %}selected{% endif %}>Unknown</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="health">Health Status</label>
+                    <input type="text" id="health" name="health" value="{{ animal.health_status }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="species_id">Species</label>
+                    <select id="species_id" name="species_id" required>
+                        {% for s in species %}
+                        <option value="{{ s.species_id }}" {% if s.species_id == animal.species_id %}selected{% endif %}>
+                            {{ s.common_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exhibit_id">Exhibit</label>
+                    <select id="exhibit_id" name="exhibit_id" required>
+                        {% for e in exhibits %}
+                        <option value="{{ e.exhibit_id }}" {% if e.exhibit_id == animal.exhibit_id %}selected{% endif %}>
+                            {{ e.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="keeper_id">Assigned Keeper</label>
+                    <select id="keeper_id" name="keeper_id" required>
+                        {% for k in keepers %}
+                        <option value="{{ k.keeper_id }}" {% if k.keeper_id == animal.keeper_id %}selected{% endif %}>
+                            {{ k.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Save Changes</button>
+
+            </form>
+        </div>
+    </div>
+</html>

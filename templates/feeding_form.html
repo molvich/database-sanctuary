@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>Record Feeding</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Record Feeding</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('animal_list') }}">Residents</a>
+            <a href="{{ url_for('index') }}">Home</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">Feeding Log</div>
+            <div class="hero-text">Record a feeding event</div>
+        </div>
+
+        <div class="form-section">
+            <form method="POST" action="{{ url_for('add_feeding') }}">
+
+                <div class="form-group">
+                    <label for="animal_id">Resident</label>
+                    <select id="animal_id" name="animal_id" required>
+                        <option value="" disabled {% if not preselect %}selected{% endif %}>Select a resident</option>
+                        {% for a in animals %}
+                        <option value="{{ a.animal_id }}" {% if preselect == a.animal_id %}selected{% endif %}>
+                            {{ a.name }}{% if a.common_name %} ({{ a.common_name }}){% endif %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="keeper_id">Keeper</label>
+                    <select id="keeper_id" name="keeper_id" required>
+                        <option value="" disabled selected>Select a keeper</option>
+                        {% for k in keepers %}
+                        <option value="{{ k.keeper_id }}">{{ k.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="food_type">Food Type</label>
+                    <input type="text" id="food_type" name="food_type" required placeholder="e.g. Raw fish, Fruit mix">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="text" id="quantity" name="quantity" placeholder="e.g. 2 kg">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <input type="text" id="notes" name="notes" placeholder="Any observations">
+                </div>
+
+                <button type="submit" class="submit-btn">Record Feeding</button>
+
+            </form>
+        </div>
+    </div>
+</html>

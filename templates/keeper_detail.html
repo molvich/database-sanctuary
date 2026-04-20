@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+        <title>{{ keeper.name }}</title>
+    </head>
+    <div class="topbar">
+        <div class="topbar-left">Keeper</div>
+        <div class="topbar-right">
+            <a href="{{ url_for('keeper_list') }}">All Keepers</a>
+            <a href="{{ url_for('index') }}">Home</a>
+        </div>
+    </div>
+    <div class="wrap">
+
+        <div class="hero">
+            <div class="hero-title">{{ keeper.name }}</div>
+            <div class="hero-text">{{ keeper.shift }} shift : {{ assigned|length }} residents assigned</div>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-card">
+                <div class="detail-label">Shift</div>
+                <div class="detail-value">{{ keeper.shift }}</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-label">Phone</div>
+                <div class="detail-value">{{ keeper.phone }}</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-label">Residents Assigned</div>
+                <div class="detail-value">{{ assigned|length }}</div>
+            </div>
+        </div>
+
+        <div class="action-row">
+            <form method="POST"
+                  action="{{ url_for('delete_keeper', keeper_id=keeper.keeper_id) }}"
+                  onsubmit="return confirm('Remove {{ keeper.name }}? This cannot be undone.');"
+                  style="display:inline">
+                <button type="submit" class="submit-btn danger-btn">Delete</button>
+            </form>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title">Assigned Residents</div>
+        </div>
+
+        <div class="data-table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Species</th>
+                        <th class="numeric">Age (yrs)</th>
+                        <th>Sex</th>
+                        <th>Health Status</th>
+                        <th>Exhibit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in assigned %}
+                    <tr class="clickable-row"
+                        onclick="window.location='{{ url_for('animal_detail', animal_id=a.animal_id) }}';">
+                        <td>{{ a.name }}</td>
+                        <td>{{ a.common_name }}</td>
+                        <td class="numeric">{{ a.age }}</td>
+                        <td>{{ a.sex }}</td>
+                        <td>{{ a.health_status }}</td>
+                        <td>{{ a.exhibit_name }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="6">No residents currently assigned.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</html>
