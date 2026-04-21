@@ -461,9 +461,8 @@ def delete_animal(animal_id):
     cursor = db.cursor()
 
     try:
-        cursor.execute("DELETE FROM feeding_log WHERE animal_id = %s", (animal_id,))
-
         # DELETE function
+        cursor.execute("DELETE FROM feeding_log WHERE animal_id = %s", (animal_id,))
         cursor.execute("DELETE FROM animal WHERE animal_id = %s", (animal_id,))
         db.commit()
     except mysql.connector.Error as err:
